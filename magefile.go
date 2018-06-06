@@ -39,7 +39,14 @@ func Clean() {
 // Install required tools.
 func Setup() {
 	fmt.Println("Running Development Setup...")
-	startAndLog(exec.Command("dep", "ensure", "-update"), "setup")
+	goGet("github.com/golang/dep/cmd/dep")
+	goGet("github.com/onsi/ginkgo/ginkgo")
+	goGet("github.com/onsi/gomega/...")
+}
+
+func goGet(name string) {
+	fmt.Printf("Getting %s ...\n", name)
+	startAndLog(exec.Command("go", "get", "-u", "-v", name), "go get")
 }
 
 func startAndLog(cmd *exec.Cmd, logprefix string) {

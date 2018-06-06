@@ -1,7 +1,5 @@
 package main
 
-import "os"
+func Main() {
 
-func main() {
-	os.Exit(0);
 }
