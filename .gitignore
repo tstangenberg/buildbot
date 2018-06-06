@@ -10,3 +10,10 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# IntelliJ Files
+/buildbot.iml
+.idea/
+
+# Build output
+/buildbot
