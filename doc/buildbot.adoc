@@ -1,0 +1,5 @@
+= BuildBot
+Thorben Stangenberg <thorben@stangenberg.ch>
+:imagesdir: ./images
+:imagesoutdir: ./images
+
