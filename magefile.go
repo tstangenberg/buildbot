@@ -15,8 +15,6 @@ import (
 // If not set, running mage will list available targets
 var Default = Build
 
-const app = "buildbot"
-
 // A build step that requires additional params, or platform specific steps for example
 func Build() {
 	mg.Deps(InstallDeps)
