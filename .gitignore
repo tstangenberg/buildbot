@@ -16,4 +16,5 @@
 .idea/
 
 # Build output
-/buildbot
+out/
+*_moq_test.go

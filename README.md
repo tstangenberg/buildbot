@@ -16,5 +16,8 @@ http://onsi.github.io/ginkgo/
 
 `ginkgo bootstrap`
 
+### New Test 
+ `ginkgo generate <NAME>`
+
 ### Watch and run tests
 `ginkgo watch ./src/...`

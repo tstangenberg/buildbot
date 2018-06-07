@@ -21,7 +21,7 @@ const app = "buildbot"
 func Build() {
 	mg.Deps(InstallDeps)
 	fmt.Println("Building...")
-	startAndLog(exec.Command("go", "build", "-o", app, "-v", "./src/..."), "build")
+	startAndLog(exec.Command("go", "build", "-o", "./out/buildbot", "-v", "./cmd/buildbot"), "build")
 }
 
 // Manage your deps, or running package managers.
@@ -33,7 +33,7 @@ func InstallDeps() {
 // Clean up after yourself
 func Clean() {
 	fmt.Println("Cleaning...")
-	os.RemoveAll("MyApp")
+	os.RemoveAll("out")
 }
 
 // Install required tools.
@@ -42,6 +42,7 @@ func Setup() {
 	goGet("github.com/golang/dep/cmd/dep")
 	goGet("github.com/onsi/ginkgo/ginkgo")
 	goGet("github.com/onsi/gomega/...")
+	goGet("github.com/matryer/moq")
 }
 
 func goGet(name string) {
