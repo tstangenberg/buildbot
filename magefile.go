@@ -20,9 +20,24 @@ const app = "buildbot"
 // A build step that requires additional params, or platform specific steps for example
 func Build() {
 	mg.Deps(InstallDeps)
+	mg.Deps(Generate)
 	fmt.Println("Building...")
 	startAndLog(exec.Command("go", "build", "-o", "./out/buildbot", "-v", "./cmd/buildbot"), "build")
 }
+
+func Generate() {
+	mg.Deps(InstallDeps)
+	fmt.Println("Generating...")
+	startAndLog(exec.Command("go", "generate", "-v", "./cmd/..."), "build")
+}
+
+func Test() {
+	mg.Deps(Generate)
+	fmt.Println("Running Tests...")
+	startAndLog(exec.Command("go", "test", "-v", "./cmd/..."), "build")
+	startAndLog(exec.Command("go", "test", "-v", "./buildbot/..."), "build")
+}
+
 
 // Manage your deps, or running package managers.
 func InstallDeps() {
@@ -55,15 +70,26 @@ func startAndLog(cmd *exec.Cmd, logprefix string) {
 }
 
 func startAndLogWithOutAndErr(cmd *exec.Cmd, stdout *os.File, stderr *os.File, logprefix string) {
-	cmdReader, err := cmd.StdoutPipe()
+	outReader, err := cmd.StdoutPipe()
 	if err != nil {
 		fmt.Fprintln(stderr, "Error creating StdoutPipe for Cmd", err)
 		os.Exit(1)
 	}
-	scanner := bufio.NewScanner(cmdReader)
+	outScanner := bufio.NewScanner(outReader)
 	go func() {
-		for scanner.Scan() {
-			fmt.Fprintf(stdout, "%s | %s\n", logprefix, scanner.Text())
+		for outScanner.Scan() {
+			fmt.Fprintf(stdout, "%s | %s\n", logprefix, outScanner.Text())
+		}
+	}()
+	errReader, err := cmd.StderrPipe()
+	if err != nil {
+		fmt.Fprintln(stderr, "Error creating StderrPipe for Cmd", err)
+		os.Exit(1)
+	}
+	errScanner := bufio.NewScanner(errReader)
+	go func() {
+		for errScanner.Scan() {
+			fmt.Fprintf(stderr, "%s | %s\n", logprefix, errScanner.Text())
 		}
 	}()
 	err = cmd.Start()
