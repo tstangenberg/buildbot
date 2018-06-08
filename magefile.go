@@ -26,13 +26,29 @@ func Build() {
 func Generate() {
 	mg.Deps(InstallDeps)
 	fmt.Println("Generating...")
-	startAndLog(exec.Command("go", "generate", "-v", "./cmd/..."), "build")
+	startAndLog(exec.Command("go", "generate", "-v", "./cmd/..."), "generate")
+	startAndLog(exec.Command("go", "generate", "-v", "./buildbot/..."), "generate")
 }
 
 func Test() {
-	mg.Deps(Generate)
+	//mg.Deps(Generate)
 	fmt.Println("Running Tests...")
-	startAndLog(exec.Command("go", "test", "-v", "./cmd/..."), "build")
+	startAndLog(exec.Command("mkdir", "out", "-p"), "test")
+	//startAndLog(exec.Command("go", "test", "-v", "-coverprofile", "./out/cmd-cover.out", "./cmd/..."), "build")
+	startAndLog(exec.Command("go", "test", "-v", "-coverprofile", "./out/cover.out", "./cmd/...", "./buildbot/..."), "test")
+}
+
+func Cover() {
+	//mg.Deps(Generate)
+	fmt.Println("Generating Coverage Report...")
+	startAndLog(exec.Command("go", "tool", "cover", "-html","./out/cover.out", "-o", "./out/coverage.html"), "cover")
+	startAndLog(exec.Command("xdg-open", "./out/coverage.html"), "cover")
+}
+
+func Run() {
+	mg.Deps(Build)
+	fmt.Println("Running App...")
+	startAndLog(exec.Command("go", "run", "-v", "./cmd/..."), "build")
 	startAndLog(exec.Command("go", "test", "-v", "./buildbot/..."), "build")
 }
 
@@ -65,6 +81,7 @@ func goGet(name string) {
 
 func startAndLog(cmd *exec.Cmd, logprefix string) {
 	startAndLogWithOutAndErr(cmd, os.Stdout, os.Stderr, logprefix)
+	cmd.Wait()
 }
 
 func startAndLogWithOutAndErr(cmd *exec.Cmd, stdout *os.File, stderr *os.File, logprefix string) {
@@ -90,7 +107,7 @@ func startAndLogWithOutAndErr(cmd *exec.Cmd, stdout *os.File, stderr *os.File, l
 			fmt.Fprintf(stderr, "%s | %s\n", logprefix, errScanner.Text())
 		}
 	}()
-	err = cmd.Start()
+	cmd.Start()
 	if err != nil {
 		fmt.Fprintln(stderr, "Error starting Cmd", err)
 		os.Exit(1)
