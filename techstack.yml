@@ -1,0 +1,70 @@
+repo_name: tstangenberg/buildbot
+report_id: ee95ea5e7053a2f4e27e341394a43507
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-31T10:30:26+00:00'
+requested_by: tstangenberg
+provider: github
+branch: master
+detected_tools_count: 5
+tools:
+- name: Golang
+  description: An open source programming language that makes it easy to build simple,
+    reliable, and efficient software
+  website_url: http://golang.org/
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/1005/O6AczwfV_400x400.png
+  detection_source_url: https://github.com/tstangenberg/buildbot
+  detection_source: Repo Metadata
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/tstangenberg/buildbot
+  detection_source: Repo Metadata
+- name: Travis CI
+  description: A hosted continuous integration service for open source and private
+    projects
+  website_url: http://travis-ci.com/
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/460/Lu6cGu0z_400x400.png
+  detection_source_url: https://github.com/tstangenberg/buildbot/blob/master/vendor/github.com/fsnotify/fsnotify/.travis.yml
+  detection_source: vendor/github.com/fsnotify/fsnotify/.travis.yml
+  last_updated_by: Thorben Stangenberg
+  last_updated_on: 2018-06-08 14:04:33.000000000 Z
+- name: check.v1
+  description: Package check is a rich testing extension for Go's testing package
+  package_url: https://pkg.go.dev/gopkg.in/check.v1
+  open_source: false
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/tstangenberg/buildbot/blob/master/vendor/gopkg.in/yaml.v2/go.mod
+  detection_source: vendor/gopkg.in/yaml.v2/go.mod
+  last_updated_by: Thorben Stangenberg
+  last_updated_on: 2018-06-07 13:52:17.000000000 Z
+- name: yaml.v2
+  description: YAML support for the Go language
+  package_url: https://pkg.go.dev/gopkg.in/yaml.v2
+  license: LGPL-3.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Go Modules Packages
+  image_url: https://img.stackshare.io/package/go-packages/image.png
+  detection_source_url: https://github.com/tstangenberg/buildbot/blob/master/vendor/gopkg.in/yaml.v2/go.mod
+  detection_source: vendor/gopkg.in/yaml.v2/go.mod
+  last_updated_by: Thorben Stangenberg
+  last_updated_on: 2018-06-07 13:52:17.000000000 Z
